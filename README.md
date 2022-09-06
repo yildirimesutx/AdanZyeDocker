@@ -70,7 +70,69 @@ bu islemleri tek seferde yapabilmek icin `docker container run` kullanılıyor
 
 - bu uygulama calıştigi sürece container ayakta kalır
 
-- uygulama calismayi biraktiginda container da kapatilir. 
+- uygulama calismayi biraktiginda container da kapatilir.
+
+**Container Temelleri-2**
+
+ soru-1: Docker imajlarında sadece tek bir uygulama mı vardır?
+
+ Hayır. Docker imajında birden fazla uygulama olabilir. Tek bir uygulama içermesi kural değildir.
+
+ soru-2: Docker, imajlarından container yaratıldığında çalışması için birden fazla uygulama atanabilir mi?
+
+ Hayır. Docker container başlatıldığı zaman otomatik çalışması için tek bir uygulamanın ayarlanmasına izin verir.
+
+soru-3 : Docker container içerisinde sadece tek bir uygulama mı çalıştırılabilir?
+
+Hayır. Docker container başlatıldığı zaman otomatik çalışması için tek bir uygulamanın ayarlanmasına izin verir fakat container içerisinde daha sonra bu uygulamanın yanında başka uygulamaklar da çalıştırılabilir.
+
+soru- 4: Docker image inda varsayılan olarak çalıştırılması için ayarlanan uygulama terine başka uygulama ile container başlatabiliyor muyuz?
+
+Evet. Container yaratılırken hangi uygulamayı çalıştırılmasını belirtebiliriz.
 
 
 
+```
+docker container run --name deneme -d -p 80:80 ozgurozturknet/adanzyedocker
+docker container run -p 80:80 dizin/imagename  
+# 80:80 potunu acıp ilgili image baslattı container oluştu
+# containerlar için uniq id üretilir
+
+docker container ls
+#bize calisan containerları gösterir
+
+docker container run --name denemecon dizin/imagename java app1
+# bu komut ile containeri default isim yerine kendi yazdigimiz ismi verdik, ayrıca baslatilan uygulama yerine son kısımda yazdığımız uygulayı baslattik.
+
+docker container run -d -p 80:80 dizin/imagename
+# bu komut ile arka planda container calisiyor, bizim shell mizi baglamadi.
+
+docker container ls -a => docker ps -a
+#calisan calismayan tüm containerlari gösterir
+
+docker container rm idnumarasi
+# containeri siler, calisan containeri silemez, fakat rm -f idnumra ile zorla silme yapabiliyoruz.
+
+docker container stop f43
+# calisan containeri durdurur. sondaki uc karakter id numarası basi
+
+```
+
+
+**Container Temelleri-3**
+
+```
+docker container run --name websunucu -p 80:80 -d ozgurozturknet/adanzyedocker
+
+ docker container exec -it websunucu sh
+# containeri bağlanma komutu, websunucu bizim proje ismi 
+
+ ls -l  içindeki uygulamaları gördük ve isimlerini yazarak uygulamayı calıştirdik
+
+ container a baglantı kurulduktandan sonra ps ile container içinde yüklü  appleri görüntüledik
+
+
+docker container run --name websunucu2 -p 80:80 -d ozgurozturknet/adanzyedocker 
+# bir containerdan aynı image kullanarak milyonlarca container oluşturulabiliyor
+
+```

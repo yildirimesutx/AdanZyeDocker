@@ -136,3 +136,29 @@ docker container run --name websunucu2 -p 80:80 -d ozgurozturknet/adanzyedocker
 # bir containerdan aynı image kullanarak milyonlarca container oluşturulabiliyor
 
 ```
+
+
+docker container prune # calısmayan tüm containerları siliyor
+docker image ls # image gösteriyor
+docker image prune -a # image siliyor
+docker image pull alpine #
+
+**Docker Katmanlı Dosya Yapısı**
+
+- Docker Union File System (birlesik dosya sistemi)
+
+<img src="notes/katman.png">
+
+- aynı image ile birçok container uretilebilir. Yapilan bu degisikler ayri bir katman olarak tutulur. Bu degisiklikten diger containerlar etkilenmez.
+
+- ayri katmanlardan olusan container ls komutu ile tek bir dosya yapısında gibi görünür. Bu yapıya Union file system denir.
+
+- Copy on Write
+
+   - container içinde yapilan degisiklik image file icindeyse bu degisiklik yazılabilir katmana R/W Layer tasinir. 
+
+<img src="notes/copy_on_write.png">
+
+
+- Not : İmage katmanli yapisi mevcut, docker aynı katmanlı olanları tek bir sefer hafizaya aliyor.
+

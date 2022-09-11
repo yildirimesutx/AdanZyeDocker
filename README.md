@@ -169,4 +169,29 @@ docker image pull alpine #
 <img src="notes/container_yasalari.png">
 - Container i tek kullanımlık olarak dusunebiliriz.Eger proje icinde tutulan kayitlar/log ve db benzeri bir yapı varsa bu container icinde tutulmaz. Bunları ayri bir yerde yutuyoruz. Container disinda tutarak erisebilir ve paylasilabilir olarak tutarız.
 
+- Bu ayrı olarak tutulan yapıya Volume diyoruz. 
+
 <img src="notes/container_volume.png">
+
+
+**Docker Volume, Container Dısı veri saklama**
+
+- `docker volume create ilkvolume` ile ilkvolume olarak ilk volumumuzu olusturduk.
+
+- `docker volume inspect ilkvolume` inspect komutu ile inceliyoruz.
+
+- `docker container run -it -v ilkvolume:/deneme2 centos sh`
+
+<img src="notes/inspect_volume.png">
+
+- yukaridaki resimde bulunan containeri sildik `docker container rm 074`
+
+- asagidaki gibi volume baska bir containera bağladık
+
+<img src="notes/volume_deneme.png">
+
+
+- Not : bir volume birden çok container tarafından kullanılabilir. Baska bir container içinde yapılan değişiklik diğer container içindeki volumu etkiler,
+
+   - `docker container run -it -v ilkvolume:/deneme3:ro centos sh` bu komut ile read only olarak oluşturulabilir yani container içinden volume yazma yapılamaz
+

@@ -162,3 +162,11 @@ docker image pull alpine #
 
 - Not : İmage katmanli yapisi mevcut, docker aynı katmanlı olanları tek bir sefer hafizaya aliyor.
 
+**Docker Container Yasam Suresi**
+
+- Container bir sorun yasandiginda silinip yeniden kurulabilme ozelligi mevcuttur.Fiziksel makineler gibi uzaktan ulasip sorunu cozmuyoruz. direk siliyoruz :)
+
+<img src="notes/container_yasalari.png">
+- Container i tek kullanımlık olarak dusunebiliriz.Eger proje icinde tutulan kayitlar/log ve db benzeri bir yapı varsa bu container icinde tutulmaz. Bunları ayri bir yerde yutuyoruz. Container disinda tutarak erisebilir ve paylasilabilir olarak tutarız.
+
+<img src="notes/container_volume.png">

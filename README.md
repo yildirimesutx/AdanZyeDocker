@@ -195,3 +195,19 @@ docker image pull alpine #
 
    - `docker container run -it -v ilkvolume:/deneme3:ro centos sh` bu komut ile read only olarak oluşturulabilir yani container içinden volume yazma yapılamaz
 
+
+**Docker Volume, Bos-dolu Volume davranışı**
+
+<img src="notes/volume_mount.png">
+
+
+`docker container run --rm -it -v deneme1:/xyz alpine sh` oluşturulan containera volume ekliyoruz rm komu ile container kapatıldığında silinmesini saglar.
+
+
+- volume yeni klasor oluşturularak mount edilir
+
+- volume var olan bir klasore mount edilir;
+   - eger volume ici bos ise olusturulan klsorun ici dolu ise bu dolu olan dosyalar volume icinde de olur
+   - eger volume ici dolu ve olusturulan klasorun ici dolu ise mount isleminden sonra o klasorde volume icindekiler gozukur
+
+

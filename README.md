@@ -210,4 +210,69 @@ docker image pull alpine #
    - eger volume ici bos ise olusturulan klsorun ici dolu ise bu dolu olan dosyalar volume icinde de olur
    - eger volume ici dolu ve olusturulan klasorun ici dolu ise mount isleminden sonra o klasorde volume icindekiler gozukur
 
+**Bind Mounts**
+
+<img src="notes/bind_mount.png">
+
+ Volume'un bind mount'tan farkı volume için bu klasörün yolunu sizin manuel göstermenize gerek olmaması.
+
+ Volume yaratığınızda otomatik olarak yaratılıyor ve siz path yerine volume adı kullanarak daha kolay işlerinizi hallediyorsunuz. 
+ Bunun dışında diğer fark da şu. 
+ 
+ Volume illa local olarak kullandığınız bir şey değil. Çeşitli volume driverları kullanarak local dışında da örneğin bir storage box üstünde volume yaratabiliyorsunuz.
+
+ - bind mount sadece local development da kullanılıyor, production ortamında kullanılmıyor.
+ 
+- docker engine yüklü olan bir sistemden bir dosyayı bir docker containerina mount edilmesine bind mount denir.
+
+`docker container run -d -p 80:80 --name ilkweb nginx`
+- bu komut ile `nginx` web sunucusu kurduk. 
+- `docker exec -it 7de sh` 7de container id ilk 3 harfi, container içerisine girmek için kullandık 
+- /usr/share/nginx/html ile default gelen http://127.0.0.1/ html sayfasına ulaştık
+- `docker rm -f 7de` zorla silme komutu
+
+- `docker container run -d -p 80:80 -v C:\Users\yildi\Desktop\Docker\AdanZyeDocker\kisim3\bolum28\websitesi:/usr/share/nginx/html nginx` bu komut ile localdeki proje dosyamızı nginx image web server ne mount ettik
+
+- mount edildikten sonra artık localdeki proje dosyamızda yaptığımız değişiklişler web server üzerinden görüntülenmemektedir.
+
+**3.Bolum Sonu Alistirma**
+
+- kisim3\bolum29\alistirma.txt
+
+- 1- image/volume/container sergileme ve silme islemi (https://docs.docker.com/)
+   
+   - `docker image ls`
+   - `docker container ls`
+   - `docker volume ls`
+
+   - `docker image rm 'image_name'` ek olar force komutu eklenip zorla silinir `docker image rm -f 'image_name'`
+   - `docker container rm 'container_name'`
+   - `docker volume rm 'volume_name'`
+       
+- 2- image calistigimiz sisteme cekilmesi
+
+  - `docker image pull 'image_name'`
+
+- 3- container olusturulmasi
+
+   - `docker container create 'image'`
+
+- 4- container olusturulmasi detached
+
+     - `docker container run -d 'image'`
+
+- 5- containerin loglarına bakma
+   - `docker container logs 'container'`       
+
+- 6- container durdurma ve tekrar başlatma ve kaldırma 
+
+    - `docker container stop 'container'`
+    - `docker container start 'container'`
+    - `docker container rm -f 'container'`
+
+7- detached ve '-p 80:80' portuna  publish edilmiş container olusturalim. Browserda görelim
+
+   - `docker container run -d - p 80:80 'image'`
+
+8-    
 

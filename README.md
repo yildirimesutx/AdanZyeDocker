@@ -101,7 +101,7 @@ docker container run -p 80:80 dizin/imagename
 docker container ls
 #bize calisan containerları gösterir
 
-docker container run --name denemecon dizin/imagename java app1
+`docker container run --name denemecon dizin/imagename java app1`
 # bu komut ile containeri default isim yerine kendi yazdigimiz ismi verdik, ayrıca baslatilan uygulama yerine son kısımda yazdığımız uygulayı baslattik.
 
 docker container run -d -p 80:80 dizin/imagename
@@ -270,9 +270,41 @@ docker image pull alpine #
     - `docker container start 'container'`
     - `docker container rm -f 'container'`
 
-7- detached ve '-p 80:80' portuna  publish edilmiş container olusturalim. Browserda görelim
+- 7- detached ve '-p 80:80' portuna  publish edilmiş container olusturalim. Browserda görelim
 
-   - `docker container run -d - p 80:80 'image'`
+   - `docker container run -d -p 80:80 'image'`
 
-8-    
+- 8- websunucu adlı bu container’ın içerisine bağlanalım. /usr/local/apache2/htdocs klasörünün altına geçelim ve echo “denemedir” >> index.html komutuyla buradaki dosyaya denemedir yazısını ekleyelim. Web tarayıcıya geçerek dosyaya ekleme yapabildiğimizi görmek için refresh edelim. Sonrasında container içerisinden exit ile çıkalım.
+
+   - `docker container run -d -p 80:80 --name ilkweb nginx`
+   - `docker container exec -it 773 sh`
+   - `cd /usr/share/nginx/html`
+   - `echo "denemedir" >> index.html`
+   - `cat index.html`
+
+
+
+- 9- websunucu isimli container’ı çalışırken silelim.
+
+    - `docker container rm -f 773`
+
+
+- 10
+    - `docker container run alpine ls`
+
+- 11 
+    - `docker volume create alistirma1`
+
+- 12
+    - `docker container run -i --name birinci alpine sh` 
+    - `docker container run -it -v alistirma1:/test alpine sh`
+    - `touch abc.txt`
+
+- 13 
+    - ``docker container run -i --name ikinci alpine sh` `
+    -  `docker container run -it -v alistirma1:/test alpine sh` 
+
+- 14       
+
+
 

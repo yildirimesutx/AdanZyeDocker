@@ -289,22 +289,32 @@ docker image pull alpine #
     - `docker container rm -f 773`
 
 
-- 10
+- 10 alpine isimli imajdan bir container yaratalım. Ama varsayılan olarak çalışması gereken uygulama yerine “ls” uygulamasının çalışmasını sağlayalım.
     - `docker container run alpine ls`
 
-- 11 
+- 11  “alistirma1” isimli bir volüme yaratalım.
     - `docker volume create alistirma1`
 
-- 12
+- 12  alpine isimli imajdan “birinci” isimli bir container yaratalım. Bu container’ı interactive modda yaratalım ve bağlanabilelim. Aynı zamanda “alistirma1” isimli volume’u bu containerın “/test” isimli folder’ına mount edelim. Bu folder içerisine geçelim ve “touch abc.txt” komutuyla bir dosya yaratalım daha sonra “echo deneme >> abc.txt” komutuyla bu dosyanın içerisine yazı ekleyelim. 
     - `docker container run -i --name birinci alpine sh` 
     - `docker container run -it -v alistirma1:/test alpine sh`
     - `touch abc.txt`
 
-- 13 
-    - ``docker container run -i --name ikinci alpine sh` `
+- 13  alpine isimli imajdan “ikinci” isimli bir container yaratalım. Bu container’ı interactive modda yaratalım ve bağlanabilelim. Aynı zamanda “alistirma1” isimli volume’u bu containerın “/test” isimli folder’ına mount edelim. Bu folder içerisinde “ls” komutyla dosyaları listeleyelim ve abc.txt dosyası olduğunu görelim. “cat abc.txt” ile dosyanın içeriğini kontrol edelim.
+    - `docker container run -i --name ikinci alpine sh` 
     -  `docker container run -it -v alistirma1:/test alpine sh` 
 
-- 14       
+- 14  alpine isimli imajdan “ucuncu” isimli bir container yaratalım. Bu container’ı interactive modda yaratalım ve bağlanabilelim. Aynı zamanda “alistirma1” isimli volume’u bu containerın “/test” isimli folder’ına mount edelim fakat Read Only olarak mount edelim. Bu folder içerisine geçelim ve “touch abc1.txt” komutuyla bir dosya yaratmaya çalışalım. Ve yaratamadığımızı görelim.
+
+      - `docker container run -i --name ucuncu alpine`
+      - `docker container run -it -v alistirma1:/test:ro alpine sh`  
+
+- 16
+
+ `docker container run -d --name websunucu1 -p 80:80 -v c:\deneme:/usr/local/apache2/htdocs ozgurozturknet/adanzyedocker`
+
+- 17 `docker container ls -a`
+
 
 
 

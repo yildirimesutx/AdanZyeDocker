@@ -316,5 +316,60 @@ docker image pull alpine #
 - 17 `docker container ls -a`
 
 
+# 4.Bolum Container 102
 
 
+**Docker Plugin-Driver**
+
+- Docker bize third party uygulama yüklememize izin vermektedir. Bu özelliği ile ile yetenekler kazandırılmaktadır.
+
+**Docker Network Driver**
+
+- Network Objeleri 
+    - Bridge
+    - Host
+    - Macvlan
+    - None
+    - Overlay
+
+
+- Brige
+
+   - Varsayılan drivedir. Network objesi yaratılırken başka bir drive belirtilmezse bridge drive ile network yaratılır.
+<img src="notes/bridge.png">
+
+
+- Host
+
+   - her sistemde host driver ile yaratılmış host adında bir network bulunur.
+<img src="notes/host.png">
+
+
+- MacVlan
+
+   - bu driver ile olusturulan network objeleri sayesinde containerlar fiziksel ağlara kendi mac adreslserine sahip birer fiziksel ağ adaptörüne sahipçesine bağlanabilirler.
+
+<img src="notes/macvlan.png">
+
+
+
+- None
+
+ - container hiçbir şekilde ağ bağlantısına sahip olmasın istenirse bu driver ile yaratılan networke bağlanır
+
+
+- Overlay
+
+  - Aynı hostlar üstündeki Birden fazla containerların aynı ağda çalışıyormuş gibi çalışması istenildiğinde Overlay network devreye girer.
+
+
+**Docker Network Objeleri-1**
+
+- `docker network ls`  ile yüklü network objelerini  gördük, 
+
+- `docker network inspect bridge`  inspect ile tüm objenin özellikleri görebiliriz. imge ve container da da kullanılır
+
+- `ctrl p q` containerdan çıkış yaparken çalışır halde kalmasını sağlar
+
+
+- `docker container run -it --name deneme23 --net none ozgurozturknet/adanzyedocker sh` none kurulması

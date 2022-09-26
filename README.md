@@ -325,7 +325,7 @@ docker image pull alpine #
 
 **Docker Network Driver**
 
-- Network Objeleri 
+- Network Objeleri => docker containerların brbirleri ile iletişime geçmeleri ve dişarıdan ulaşılması için  tüm iletişim alt yapısını network objeleri ile sağlıyoruz
     - Bridge
     - Host
     - Macvlan
@@ -341,7 +341,7 @@ docker image pull alpine #
 
 - Host
 
-   - her sistemde host driver ile yaratılmış host adında bir network bulunur.
+   -  üzerinde çalıştığı host un bir parçası olması gerektiği durumlarda, o containerin ağ kartına özelliklerinin kullanılması, üzerinde çalıştığı network ile bir izalosyon olmadığı durumdur. her sistemde host driver ile yaratılmış host adında bir network bulunur.
 <img src="notes/host.png">
 
 
@@ -365,11 +365,51 @@ docker image pull alpine #
 
 **Docker Network Objeleri-1**
 
+- `BRIDGE`
+
 - `docker network ls`  ile yüklü network objelerini  gördük, 
 
-- `docker network inspect bridge`  inspect ile tüm objenin özellikleri görebiliriz. imge ve container da da kullanılır
+- `docker network inspect bridge`  inspect ile tüm objenin özellikleri görebiliriz. image ve container da da kullanılır
 
 - `ctrl p q` containerdan çıkış yaparken çalışır halde kalmasını sağlar
 
 
 - `docker container run -it --name deneme23 --net none ozgurozturknet/adanzyedocker sh` none kurulması
+
+
+- `docker exec -it container_name sh` komutu ile container içine girdik, `ifconfig` komutu ile de containerin ip adresini görüntüledik.
+
+
+- container a dış dünyadan bağlanabileceğimiz gibi container içinden de ping atabiliyoruz  ``ping 8.8.8.8.`
+
+- bir container diğer container a da ping atabilir.
+
+- `HOST`
+
+- hostlara kendi pc den bakamadığımız için docker with playden takip ediyoruz.
+
+- `docker container run -it --name deneme1 --net host ozgurozturknet/adanzyedocker sh` host olarak oluşturulmak istenildiğinde 
+
+
+- `None`
+
+- `docker container run -it --name deneme1 --net none ozgurozturknet/adanzyedocker sh` none olarak olusturduk, herhangi bir network bağlantısı olmamasını istediğimiz durumlarda oluşturuyoruz.
+
+
+
+**Docker Network Objeleri-2**
+
+
+
+- `docker container run -d --publish 8080:80 ozgurozturknet/adanzyedocker` oluşturduğumuz containera ulaşmak için portunu açmamız gerekiyor, 
+
+- `-p host_port:container_port` ilk önce hostun portu, sonra container portu yazılıyor
+
+- default olarak tcp oluşturur,  `udp` istenilirse kodun sonuna 53:53/udp yapılır
+
+- Aynı networke sahip containerlar port publish etmeden haberleşebilirler
+
+
+**Docker Network Objeleri-3**
+
+- varsayılan network objeleri yerine kendi objelerimizide oluşturabiliriz.

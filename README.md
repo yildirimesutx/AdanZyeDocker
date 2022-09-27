@@ -473,3 +473,22 @@ docker image pull alpine #
 
 
 **Logging Uygulama Günlükleri**
+
+
+- `docker logs name` log komutu ile log kayıtlarını görüntüledik,
+
+- `stdin` => uygulamaya giriş için  `stdout` => uygulama çıktıları `stderr` => hata kayıtları
+
+
+- `docker logs --details container_name` detayli log kayıtları için
+
+- `docker logs -t container_name` log kaydının ne zaman olusturulduğunu iletir
+
+
+- `docker logs --until zaman_damgası container_name` belirtilen zaman kadar olan kayıtları getirir
+
+- `docker logs --since zaman_damgası container_name` belirtilen tarihten sonrasının getirir
+
+- `docker logs --tail 3 container_name` son uc 3 satırı verir
+
+-  `docker logs -f  container_name` sabit bir log ekranı oluşturuyor, logları takip ediyor

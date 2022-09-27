@@ -413,3 +413,63 @@ docker image pull alpine #
 **Docker Network Objeleri-3**
 
 - varsayılan network objeleri yerine kendi objelerimizide oluşturabiliriz.
+
+- Ayrıca bir network objesinden de bircok olusturabiliriz,
+
+- aynı makine icinde birbiri ile iletisimi olan uygulamaları aynı 
+  network objesine, iletisim kurulmasını istemedigimiz olanları 
+  ayırmak maksadıyla farklı network objesine baglamak icin 
+  birkac sayıda network objesi olusturabiliriz
+
+<img src="notes/many_bridge.png"> 
+<img src="notes/bridge_not.png">  
+
+- Default bridge network de IP adres aralığını degistirme islemleri karisik ve zorlayıcı bu sebeple yeni network objesi olusturarak bu sorunu cözebiliriz.
+
+- Varsayılan bridge network objesine bagli containerlar, birbirlerine isimleri ile ulasamazlar, dns hizmeti yotur.
+
+- Kullanıcı tanımlı olusturulan bridge networklerine bagli containerlar isimleri ile birbirlerine ulasabilmektedir.
+
+- Varsayılan bridge networkune bagli  containerların baglantılarını kesemiyoruz. Kullanıcı tanımlı olanların baglantıları kesilebilmekte ve tekrar baglanabilmektedir.
+
+
+- uygulama;
+
+- `docker container run -d --name websunucu1 ozgurozturknet/adanzyedocker`
+
+- `docker container run -it --name database1 ozgurozturknet/adanzyedocker sh`  iki container oluşturduk, default olarak bridge networkune bağlandı ve isimleri ile ping attığımızda baglantı kurulamadı.
+
+- kullanıcı bridge olusturulmasi :
+
+- `docker network create kopru1`  komutu ile yeni network olusturduk, burada default olarak bridge network oluşturdu, 
+
+- `docker network create --driver host` olarak da host oluşturabiliriz
+
+- `docker network ls` mevcut networkleri görüntüledik
+
+- `docker network inspect kopru1` detaylarna baktık
+
+- `docker container run -dit --name websunucu --net kopru1 ozgurozturknet/adanzyedocker sh`
+   
+    
+    - `-d` container oluşturduktan sonra calışmasını sağlar
+    - `-it` oluşturulduktan sonra containera bağlanmak için 
+    - `-dit` container oluşturduktan sonra calışmasını ve containere bağlanmasyı sağlar fakat, bağlanmadan komut satırına geçer, diğer containerları olusturabilmek icin, yani arka planda bağlantı sağlar
+    - `docker attach websunucu` arka tarafta baglantı saglayan containera bu komut ile baglandık
+
+
+- `docker network create --driver=bridge --subnet=10.10.0.0/16 --ip-range=10.10.10.0/24 --gateway=10.10.10.10 kopru2` subnet ve ip tanımlayarak network objesi olusturduk 
+
+
+- `docker network connect kopru2 database`, kullanıcı tarafından olusturulmus networke baglı bir containeri baska bir network objesine de baglıyabiliyoruz. 
+
+- bir container birden fazla networke baglanabilir
+
+- `ctrl p q ` ile calısan containeri durdurmadan icinden cıkılabiliyor
+
+- `docker network disconnect kopru2 database` ilgili network objesinden container baglantısını kestik.
+
+- ``dcoker network rm kopru1` network objesini siliyoruz fakat bagli container varsa silmez, container baglantılarını kesmek yada silmek gerekir.
+
+
+**Logging Uygulama Günlükleri**

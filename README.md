@@ -55,6 +55,9 @@ client win da deamon ise linuxda calisiyor.
 
 ---
 
+
+# 3.Bolum Container 101
+
 **Container Temelleri-1**
 
 
@@ -492,3 +495,27 @@ docker image pull alpine #
 - `docker logs --tail 3 container_name` son uc 3 satırı verir
 
 -  `docker logs -f  container_name` sabit bir log ekranı oluşturuyor, logları takip ediyor
+
+- `docker container run --log-driver splunk nginx` merkezi bir log dirve kurularak logları burada tutabiliriz. container kurulurken aktif edilir. 
+
+
+
+**Docker Stats ve Top**
+
+
+- `docker top container_name`  sistemde calışan prosesleri görüntülüyoruz.
+
+- `docker stats` o sistemde calisan tüm containerların cpu, mem, limit, net ı/o bakabiliyoruz. ismini yazarsak sadece o containeri veriri.
+
+
+
+**Container Cpu ve limitleri**
+
+- sistem üzerinde calisan containerların ram lerinde kısılama getirebiliyoruz.
+
+- `docker container run -d --memory=100m --name con1 ozgurozturknet/adanzyedocker` ram e kısıtlama getirdik
+
+- `docker container run -d --memory=100m --memory-swap=200m  --name con2 ozgurozturknet/adanzyedocker` ek olarak swap alanı verebiliyoruz. M=> mb , G=> gb
+
+
+- CPU kısıtlaması ve ayarlanması

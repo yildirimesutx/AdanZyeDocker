@@ -519,3 +519,43 @@ docker image pull alpine #
 
 
 - CPU kısıtlaması ve ayarlanması
+
+    - calisilan ortamdaki core sayısına göre containerlara atama yapabiliyoruz.
+    - task manager/logical processors pc de bu sekilde kontrol edilir, 0 dan 8 e kadar oldugunu varsayarsak, örnek olarak con1=> 1, 4 uncu core atayabiliyoruz.
+
+    - iki yontemi var bu islemin;
+
+    - `docker container run -d --cpus="1.5" ozgurozturknet/adanzyedocker` sistemde ne kadar cpu varsa 1.5 tanesi kullanacak anlamı var.
+    - `docker container run -d --cpus="1.5" --cpuset-cpus="0,3"  ozgurozturknet/adanzyedocker` cpuset-cpus ile hangi core kullanacaksa o cekirdekler secilir
+
+
+**Environment Variables**
+
+- `Get-ChildItem Env:` sistem üzerinden tanımlanmış environment variables bu sekilde sorugladık 
+
+- `$Env:TEMP` temp yerine farklı variable yazarak value ulasiriz.
+
+- `$Env:test="denemedir"`ayrıca kendimizde environment variable tanımlayabiliyoruz test:variable, denemedir:value 
+
+
+- Linux ortamında nasıl oluyor;
+
+   - `printenv` ile linux ortamındaki bütün env görüntüleriz
+
+   - `echo $TERM` burada TERM variablenin value görüntüledik
+
+   - `export test="denemedir"` variable ve value olusturduk
+
+
+**Docker Environment Variables**
+
+- `docker conteiner run -it --env variable_name=value_name ubuntu bash` variabler key sensitive dir. nasıl yazıldıysa o sekilde cagrılmalıdır. 
+
+- `docker container run -it --env TEMP ubuntu bash` seklinde yazarsak yani value tanımlamazsak o makinenin üzerindeki variable alır
+
+- `docker container run -it --env-file .\env.list ubuntu bash` bircok env yüklencekse bir file icesinden de yukleme yapılabilir. env file path belirtilir
+
+- Variabler neden kullanılır sorusunu şu şekilde özetleyebiliriz. uygulamamızı production ve test ortamında kullanacağımız DB için bir variable tanımlanır, hangi ortama gecildiyse o secilen variable atam ayapılarak devam edilir. 
+
+
+

@@ -559,3 +559,16 @@ docker image pull alpine #
 
 
 
+**4.Bolum Sonu Alistirma**
+
+- ./isim4/bolum43/alistirma.txt 
+
+- 1 - `docker container prune` tüm containerları sildi
+
+- 2 - `docker network create --driver=bridge --subnet=10.10.0.0/16 --ip-range=10.10.10.0/24 --gateway=10.10.10.10 alistirma-agi` and `docker network inspect 708` 
+
+- 3 - `docker container run -d --name web1 --net alistirma-agi --publish 8080:80  nginx:1.16`
+
+- 4 - `127.0.0.1:8080` and `docker logs web1`
+
+- 5 - `docker logs -f web1`

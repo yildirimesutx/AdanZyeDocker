@@ -572,3 +572,67 @@ docker image pull alpine #
 - 4 - `127.0.0.1:8080` and `docker logs web1`
 
 - 5 - `docker logs -f web1`
+
+- 6 - 
+
+
+
+
+# 5.Bolum Image ve Registry
+
+**Docker İmage isimlendirme Tag Yapısı**
+
+- Docker Image = Bir linux isletim sisteminden çekirdek ve gereksiz tüm dosyaları cıkardıktan sonra, çalıştırmak istediğimiz uygulamayı ve bu uygulama icin gerekli olan kütüphanelerin yükledikten sonra containerda calimasi icin gerekli ayarlar yapılarak bir paket haline Image deniyor.
+
+
+- Docker Image Registry = Docker image depolandığımız sistemlerdir. Bunların en buyugu docker hub, azure container registery gibi cloud yapılar olabilir. Ya da sadece bizim ulasabilecegimiz sistemlerde olabiliyor.  Docker trusted registry, private image registry gibi
+
+- Aksini belirtmediğimiz sürece olusturulan docker image docker hub ile haberleşecek sekilde olusur.
+
+- Docker image isimlendirilmesi, her image uniq id vardır, fakat id ile cagrılması vs zor oldugundan tag/isim yapısı vardır. Bu tag aynı zamanda bu image depolandıgı yer ile ilgili bilgi vermektedir.
+
+
+
+<img src="notes/docker_image_name.png"> 
+
+
+- image versiyonlarını tag ile ayırabiliriz.  örn  ozgurozturknet/adanzyedocker:v1, : den sonta tag belirtilir, aynı repository de farklı versionlar tutulur, default olarak `latest` olarak gelir
+
+
+- `latest` turkce anlamı en güncel olmasına ragmen, image de bu sekilde olmayabilir, bir image kullanılırken guncel vs kontrol edilmelidir.
+
+
+
+- `docker image pull ozgurozturknet/adanzyedocker` var olan bir image pull ettik, vesiyon belirtilmedigi icin latest olarak geldi.
+
+- `docker.io/ozgurozturknet/adanzyedocker:latest` yukaridaki komut ile belirtildigi sekilde image geldi, 
+    - ilk kısım: docker.io => image barindigi alani belirtir
+    - orta kisim: ozgurozturknet/adanzyedocker => repostry 
+    - :latest => versiyonunu belirtir.
+
+
+- image resmi ve  resmi olmayan image olarak ikiye ayrılır, 
+      - `ozgurozturknet/adanzyedocker` resmi olmayan image kirimli olarak gelmektedir.
+      - `docker.io/library/ubuntu:latest` resmi olan
+
+- `docker image pull gcr.io/google-containers/busybox`   docker hub da bulunan image barindigi alanı yazmıyorduk fakat docker hub disindakiler icin bunu yaziyoruz
+
+- `docker pull ozgurozturknet/adanzyedocker:v1` direk docker pull ile kullanabiliriz, ayrıca tag belirterek da indirmeyi tamamladık.
+
+
+**Docker Hub**
+
+- Docker EE, Docker CE, Plugins, Containers
+
+- offical hesap ve kullanıc/organize tarafından hesaplar mevcut,
+
+
+- resmi hesaplarda güvenlik acikları docker hub tarafından kontrol ediliyor, 
+
+
+- tag lerde 5, 5.2, 5.2.7 yan yana yazılanlar aynı id image sahip oluyorlar
+
+
+-  bir cok kisi ile calisian yapılarda organization kullanaılabilir, 
+
+- repository CLI ile de docker hub panelden de olusturulabilir, CLI login olabiliyoruz.

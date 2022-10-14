@@ -637,7 +637,27 @@ docker image pull alpine #
 
 - repository CLI ile de docker hub panelden de olusturulabilir, CLI login olabiliyoruz.
 
+**Docker Image Olusturma Dockerfile-1**
 
+- `Dockerfile` isimli bir file olusturuyoruz, ozel bir talimat dili ile yazilir. talimatların aciklamalari .\kisim5\bolum47\Dockerfile Talimatlari Aciklamasi.txt
+
+```
+FROM : olusturulacak imajin hangi imajdan olusturulacağını belirtilen talimat, tek mecburi talimat budur. mutlaka olmalidir. örn: ubuntu:18.04
+
+RUN  : olusturulması istenilen image icinde komut calismasını saglar. shell de calistirilmasi gereken komutlar kullanilir.
+
+
+WORKDIR  :istenilen klasöre gecmek icin oradan calismak icin verilen talimattir. WORKDIR /usr/src/app, cd ile yaptigimiz isi WORKDİR ile yaptık, ilgili klasör yok ise olusturdu.
+
+COPY  : image icine dosya veya klasör kopyalamak icin kullanılır.  
+
+EXPOSE : image den olusacak containerlarin hangi portlarinin üstünden erisebilecegini yani hangi portlarin yayınlanacagini bu taliamt ile belirleriz. EXPOSE 80/tcp
+
+CMD : bu imageden  container yaratildigi zaman varsayılan olarak calistirilmasini istedigimiz komutu bu talimat ile belirleriz. CMD java merhaba
+
+
+
+```
 
 
 **Docker Image Olusturma**

@@ -636,3 +636,28 @@ docker image pull alpine #
 -  bir cok kisi ile calisian yapılarda organization kullanaılabilir, 
 
 - repository CLI ile de docker hub panelden de olusturulabilir, CLI login olabiliyoruz.
+
+
+
+
+**Docker Image Olusturma**
+
+- uygulamanın olduğu aynı dizinde `Dockerfile` isimli file olusturduk,
+
+- Dockerfile=> icerisne talimatlarimizi yaziyoruz,
+
+    ```
+     FROM ubuntu:18.04
+     RUN apt-get update -y
+     RUN apt-get install default-jre -y
+     WORKDIR /merhaba
+     COPY /myapp .
+     CMD ["java", "merhaba"]
+     ```
+
+- `docker image build -t yildirimesut/ilk_image .` komutu ile de image olusturuyoruz. eger Dockerfile ile file ismi olusturulmamıssa  `docker image build -t yildirimesut/ilk_image -f Dockerfile .` bu sekilde tekrar file ismini belirtmemiz lazım. eger aynı dizinde degilsek nokta yerine app oldugu path dizini yazıyoruz. 
+
+
+- `docker container run yildirimesut/ilk_image` image den cntainer olusturduk ve calistirdik
+
+- `docker image history yildirimesut/ilk_image` image hakkında gecmisi verir 

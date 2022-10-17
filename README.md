@@ -681,3 +681,100 @@ CMD : bu imageden  container yaratildigi zaman varsayılan olarak calistirilmasi
 - `docker container run yildirimesut/ilk_image` image den cntainer olusturduk ve calistirdik
 
 - `docker image history yildirimesut/ilk_image` image hakkında gecmisi verir 
+
+
+- `docker image history yildirimesut/ilk_image` ile image ait katmaları görebiliyoruz.
+
+- `docker image push yildirimesut/ilk_image` docker hub olusturdugumuz image gönderdik
+
+
+- **Docker image olusturma-4**
+
+- bolum50/py dizindeki app den image olusturduk. yukarıdaki java app den farklı olarak ubuntu, env gibi yapıları kurmaık, office yapıyı kurduk, bu bize kurulması gereken yapıları hazır olarak verdi, 
+
+```
+FROM python:alpine
+COPY . /app
+WORKDIR /app
+RUN pip install -r requirements.txt
+EXPOSE 5000    # portunu belirledik
+CMD python ./index.py
+```
+
+- `docker image build -t yildirimesut/flask .` dockerfile ile aynı dizinde olacak şekilde komutu calistirarak image olusturduk.
+
+- `docker container run --rm -p 80:5000 yildirimesut/flask` ile container olusturduk, --rm ile container kapatıldıktan sonra silinmesi icin gecerli
+
+- kisim5\bolum50\nodejs icerisindeki app den yeni bir image olusturduk.
+
+
+- Dockerfile olusturuken kısa ozet;
+ ```
+ 1. ilgili app icin gerekli yapıyıyı kur, node, python vs icin officel yapısını kuralım
+ 2. bu app in barinacagi folder yapisini olustur.
+ 3. bu olusturulan dizin icerisine gerekli ihtiyac duyulan gerekli file copy islemini uygula
+ 4. ilgili app in calışması icin gerekli komutlaruı yazalim, "npm install", "pip install -r requirements.txt" gibi
+ 5. port belinlenmesi gerekiyorsa port ataması yap
+ 6. container olusturuulduğunda calistirimalsi icin gerekli komutu yaz CMD [ "node", "server.js" ] 
+
+
+ ```
+
+
+ - Dockerfile hazırlanırken şu konuya da dikkat edilmeli, app icinde sürekli güncellenecek olan yapılar daha alt tarafa yazilmalidir. degismeyecek olan yapilar üst kisima yazilmalidir. yapilan her degisiklikten sonra tekrardan olusturulan image cache kullanarak daha hızlı olusmasi icin gerekli bir düzenlemedir.
+
+ ```
+FROM node:10
+
+# Create app directory
+WORKDIR /usr/src/app
+
+# Install app dependencies
+# A wildcard is used to ensure both package.json AND package-lock.json are copied
+# where available (npm@5+)
+COPY package*.json ./
+
+RUN npm install
+# If you are building your code for production
+# RUN npm ci --only=production
+
+# Bundle app source
+COPY server.js .
+EXPOSE 8080
+CMD [ "node", "server.js" ]
+ ```
+
+***
+
+
+
+
+
+**Linux Shell bazı komutlar**
+
+- `docker run -it ubuntu bash` ile linux bash acabiliriz.
+
+- `echo` bir durumun ciktisini verir. istenirse bu durum bir file ,cerisinede yazdirilabilir.
+
+
+- `echo "kale" > test.txt `  `>` isareti ile yazdirilmak istenilen ifade ilgili dosya belirtirerek icerisine yazdırır. ilgili file yoksa olusturur.
+
+
+- `&` ampersand ilgili komutun sonuna ekliyoruz.   ilgili komutun calistirilmasini sagliyor ve bize komut satırına aktarıyor, calismasi gereken app beklemeden arka tarafta kodu calstirip bize komut satırı kulanmamızı saglıyor. 
+
+- `|` pipe ile de birinci komutun ciktisini ikinci komut olarak girdi haline getirmemizei sagliyor.
+
+- `cat abc.txt | grep 3` not:grep belirlenen ifadeyi ilgili çıktıda bulup ekrana getirir.
+
+- `;` semicolon bize tek bir satırda birden fazla komut girmemizi sağlar
+
+- `date; ls` gibi
+
+- `&&` iki komutun durumunu degerlendirme yaparak calistirir., sol taraftaki komut true ise soldaki ve sagdaki komutu calıstırır.
+
+- `cat test.txt && echo "dosya bulundu"` 
+
+
+- `||` DOUBLE PIPE, komut1 || komut2, komut1 calisirsa komut2 calistirma, komut1 calismazsa komut2 calistir.
+
+

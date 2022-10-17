@@ -688,7 +688,7 @@ CMD : bu imageden  container yaratildigi zaman varsayılan olarak calistirilmasi
 - `docker image push yildirimesut/ilk_image` docker hub olusturdugumuz image gönderdik
 
 
-- **Docker image olusturma-4**
+**Docker image olusturma-4**
 
 - bolum50/py dizindeki app den image olusturduk. yukarıdaki java app den farklı olarak ubuntu, env gibi yapıları kurmaık, office yapıyı kurduk, bu bize kurulması gereken yapıları hazır olarak verdi, 
 
@@ -777,4 +777,35 @@ CMD [ "node", "server.js" ]
 
 - `||` DOUBLE PIPE, komut1 || komut2, komut1 calisirsa komut2 calistirma, komut1 calismazsa komut2 calistir.
 
+
+**Docker image olusturma-5**
+
+
+- kisim5/bolum52/hello-docker bulunan app kullanarak image olusturduk
+
+- Dockerfile `HEALTHCHECK` isimli talimat tanımladık, bu talimat olusturdugumuz image container olustugunda app de bir hata ve sorun olustugunda test etmesi icin tanımlanmistir.
+   
+     `HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 CMD curl -f http://localhost/ || exit 1`
+
+     ```
+     --interval=30s => 30s aralıklarla calistir.
+     --timeout=10s => 10s boyunca calistir.
+     --start-period=5s => 5s sonra baslat
+     --retries=3 =>3 kere bu islemi yap
+     CMD curl -f http://localhost/  => bu adresi kontrol et
+     ```
+
+- Ayrıca hostname ve kullanici bilgilerini dinamik hale getirmek icin CMD talimatından faydalandık
+
+   `CMD sed -e s/Kullanici/"$KULLANICI"/ Hello_docker.html > index1.html && sed -e s/Hostname/"$HOSTNAME"/ index1.html > index.html ; rm index1.html Hello_docker.html; nginx -g 'daemon off;'`
+
+**Docker image olusturma-6**  
+
+
+
+- `\` backslash ile uzun talimat satırlarını alt satıra alabiliriz.
+
+- her yazılan talimat satiri ayri bir katman olur, ortak talimatları tek bir satirda yazabiliriz.`&&` ve `||` faydlanabiliriz.
+
+- image olusturacagimiz base yapidan sabit gelen talimatlar override yapilabilmektedir. Override yapildigindaki son talimat dikkate alinir.
 

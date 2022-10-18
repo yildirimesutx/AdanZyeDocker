@@ -809,3 +809,85 @@ CMD [ "node", "server.js" ]
 
 - image olusturacagimiz base yapidan sabit gelen talimatlar override yapilabilmektedir. Override yapildigindaki son talimat dikkate alinir.
 
+**ADD and COPY difference** 
+
+
+- `COPY`
+
+- `ADD` copy ile aynı işi yapar dosya yada klasor kopyalamamizi saglar. 
+      - ADD ayrıca;
+      - dosya kaynaginin URl olmasina izin verir. uzak sunucudan kopyalamaya izin verir fakar zip dosyasi ise acmaz
+      - kaynak olarak belirtilen .tar dosyasını image dosyasına kopyalar ve acar 
+
+
+      ```
+
+     FROM alpine:latest
+     WORKDIR /app1
+     COPY wordpress.tar.gz .    => dosyayı kopyalar fakat acmaz
+     ADD wordpress.tar.gz .     => dosyayı kopyalar acar
+     ADD https://wordpress.org/latest.tar.gz .  => dosyayı uzak sunucudan kopyalar fakat acmaz!!!!!!
+
+      ```
+
+
+**ENTRYPOINT and CMD**   
+
+
+<img src="notes/CMD_ENTRYPOINT.png"> 
+
+- `CMD` talimati ile bir imageden container olusturuldugunda uygulanmasi istenilen komut yazilir, 
+
+- CMD yazilan container olusturulma asamasında RUN da degistirilebilir.
+
+
+- `ENTRYPOINT` talimati aynı CMD gibi container olusturuldugunda istenilen kumut yazilir, fakat RUN komutu ile degistirilmez.
+
+
+- `CMD` and `ENTRYPOINT` aynı anda kullanildiginda ise CMD ENTRYPOINT'in parametresi gibi davranir.
+
+     - example => entrypoint de app ismini belirttik, cmd ile de version belirledik, istenilen durumlara göre farklı versiom calistirilabiliyor
+
+
+- ` docker image build -t pingimaj -f .\Dockerfile.Centos .` dockerfile dosyasinin ismini farklı olarak yazdigimizda `-f file dosyasinin ismini yazdik`
+
+
+
+**Exec and Shell** 
+
+
+<img src="notes/exec_shell.png"> 
+
+- `EXEC` json array formatında yazilan komutlardir, komut exec formatinda girildiginden dolayi shell acilmaz, komut direk process olarak calisir. Container in pid1'i o process olur.
+
+
+- `SHELL` komut shell formunda girildiyse docker bu imajdan container olusturuldugunda varsayılan shell i calistirarak icerisine girer. bu nedenle calisan 1.process yani pid1 bu shell process i olur.
+
+
+- Exec komut formunda calistirilan komutlar her hangi bir shell process calismadigi icin Environment Variable gibi bazı degerlere ulasamaz.
+
+- Eger entrypoint and cmd birlikte kullanılacaksa exec form kullanilmalidir. shell formu kullanildiginda cmd komutlari entrypoint e parametre olarak aktarılmıyor.
+
+- example, bolum56/Dockerfile ile CMD yi,
+  
+  
+   - shell formatında yazarsak $TEST icerigine ulasabiliyoruz. 
+
+     ```
+    FROM centos:latest
+    ENV TEST="Bu bir denemedir"
+    CMD echo $TEST
+     ```
+
+
+   - exec formatında yazarsak ENV ulaşamadık.
+      ```
+    FROM centos:latest
+    ENV TEST="Bu bir denemedir"
+    CMD ["echo", "$TEST"]
+     ```
+
+- shell formunda yazdığımızda asagida belirtildigi gibi shell satırı acarak devam etti, exec formunda ise process olarak ele aldi.
+
+<img src="notes/exec_shell_2.png"> 
+

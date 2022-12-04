@@ -889,5 +889,4 @@ CMD [ "node", "server.js" ]
 
 - shell formunda yazdığımızda asagida belirtildigi gibi shell satırı acarak devam etti, exec formunda ise process olarak ele aldi.
 
-<img src="notes/exec_shell_2.png"> 
-
+<img src="notes/exec_shell_2.png">
